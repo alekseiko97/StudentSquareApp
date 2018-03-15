@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "173201972858",
+    "firebase_url": "https://androidproject-2e49f.firebaseio.com",
+    "project_id": "androidproject-2e49f",
+    "storage_bucket": "androidproject-2e49f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:173201972858:android:bb1afc6265c9d64c",
+        "android_client_info": {
+          "package_name": "com.fhict.studentsquareapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "173201972858-cm77u77es4ng27lqle53ui4nh3f6r1ks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fhict.studentsquareapp",
+            "certificate_hash": "685443700f9f6c7575d9859cefb53fc026733cc8"
+          }
+        },
+        {
+          "client_id": "173201972858-moeuudqv37sglj6k62bsbk0mqdn7kc1u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ0cYwkEw35pxiIjq4kVKcIzj-TPa2928"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "173201972858-moeuudqv37sglj6k62bsbk0mqdn7kc1u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
