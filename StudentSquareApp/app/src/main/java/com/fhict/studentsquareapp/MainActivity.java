@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user == null) {
                     // user auth state is changed - user is null
                     // launch login activity
-                    finish();
+                    startActivity(new Intent(getApplicationContext(), SignInActivity.class));
                     Toast.makeText(getApplicationContext(), "Logged out!", Toast.LENGTH_SHORT).show();
 
                 }
