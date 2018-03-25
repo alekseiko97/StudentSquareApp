@@ -1,7 +1,6 @@
 package com.fhict.studentsquareapp;
 
 import android.content.Intent;
-import android.nfc.FormatException;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,16 +12,12 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
 public class CreateAnnouncementActivity extends AppCompatActivity {
 
     private NumberPicker numberPicker;
     private Spinner spinner;
     private TextInputEditText titleField;
     private EditText descriptionField;
-    public ArrayList<Announcement> announcementList = new ArrayList<>();;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +55,8 @@ public class CreateAnnouncementActivity extends AppCompatActivity {
             String type = spinner.getSelectedItem().toString();
 
             Announcement announcement = new Announcement(title, description, nrOfPoints, type);
-            announcementList.add(announcement);
 
-
-
-            Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.putExtra("announcement", announcement);
             setResult(RESULT_OK, intent);
             finish();

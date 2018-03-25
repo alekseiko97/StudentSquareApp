@@ -1,7 +1,8 @@
 package com.fhict.studentsquareapp;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.Serializable;
 
@@ -16,6 +17,7 @@ public class Announcement implements Serializable {
     private String description;
     private int nrOfPoints;
     private String type;
+   // private FirebaseUser firebaseUser;
 
     Announcement(String name, String description, int nrOfPoints, String type)
     {
@@ -23,49 +25,26 @@ public class Announcement implements Serializable {
         this.description = description;
         this.nrOfPoints = nrOfPoints;
         this.type = type;
+       // firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
-//    public Announcement(Parcel in) {
-//        name = in.readString();
-//        description = in.readString();
-//        nrOfPoints = in.readInt();
-//        type = in.readString();
-//    }
+
 
     @Override
     public String toString()
     {
-        return name + " \n " + description;
+        if (description.length() >= 40)
+        {
+            return name + "\n" + description.substring(0, 40) + "...";
+        }
+        else
+        {
+            return name + "\n" + description;
+        }
+
     }
 
 
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel parcel, int i) {
-//        parcel.writeString(name);
-//        parcel.writeString(description);
-//        parcel.writeInt(nrOfPoints);
-//        parcel.writeString(type);
-//    }
-//
-//    public static final Parcelable.Creator<Announcement> CREATOR = new Parcelable.Creator<Announcement>()
-//    {
-//
-//        @Override
-//        public Announcement createFromParcel(Parcel parcel) {
-//            return new Announcement(parcel);
-//        }
-//
-//        @Override
-//        public Announcement[] newArray(int i) {
-//            return new Announcement[i];
-//        }
-//    };
 
 
 }
