@@ -5,6 +5,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by ASUS-PC on 22.03.2018.
@@ -13,11 +16,13 @@ import java.io.Serializable;
 
 public class Announcement implements Serializable {
 
-    private String name;
-    private String description;
-    private int nrOfPoints;
-    private String type;
-   // private FirebaseUser firebaseUser;
+     String name;
+     String description;
+     int nrOfPoints;
+     String type;
+     DateFormat dateFormat;
+     String createdAt;
+     String createdBy;
 
     Announcement(String name, String description, int nrOfPoints, String type)
     {
@@ -25,7 +30,9 @@ public class Announcement implements Serializable {
         this.description = description;
         this.nrOfPoints = nrOfPoints;
         this.type = type;
-       // firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        this.dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        this.createdAt = dateFormat.format(new Date());
+        this.createdBy = FirebaseAuth.getInstance().getCurrentUser().getEmail();
     }
 
 

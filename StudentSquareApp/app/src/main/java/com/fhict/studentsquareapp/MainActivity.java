@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +16,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +30,12 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ListView listView;
-    private ArrayAdapter<Announcement> adapter;
+    private RecyclerView mRecyclerView;
+    private RVAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Announcement> announcementList = new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -52,11 +64,37 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View hView = navigationView.getHeaderView(0);
+        TextView userEmail = (TextView)hView.findViewById(R.id.emailTextView);
+        userEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
+        mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new RVAdapter(announcementList);
+        mRecyclerView.setAdapter(mAdapter);
 
 
-        listView = (ListView)findViewById(R.id.listView);
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, announcementList);
-        listView.setAdapter(adapter);
+
+       mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+           @Override
+           public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+               return false;
+           }
+
+           @Override
+           public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+           }
+
+           @Override
+           public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+           }
+       });
+
     }
 
 
@@ -71,7 +109,7 @@ public class MainActivity extends AppCompatActivity
             {
                 Announcement a = (Announcement)data.getExtras().get("announcement");
                 announcementList.add(a);
-                adapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
             }
         }
     }

@@ -31,6 +31,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="enter_title_name">Enter title name</string>
+    <string name="created_at">Created at:</string>
 
     <string-array name="types">
         <item>Announcement</item>
