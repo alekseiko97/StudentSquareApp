@@ -1,6 +1,7 @@
 package com.fhict.studentsquareapp;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,6 +26,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -82,6 +85,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
 
@@ -102,7 +107,9 @@ public class MainActivity extends AppCompatActivity
             {
                 Announcement a = (Announcement)data.getExtras().get("announcement");
                 announcementList.add(a);
+                Collections.sort(announcementList);
                 mAdapter.notifyDataSetChanged();
+
             }
         }
     }
