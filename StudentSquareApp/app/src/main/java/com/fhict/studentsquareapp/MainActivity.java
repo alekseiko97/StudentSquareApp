@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,22 +80,13 @@ public class MainActivity extends AppCompatActivity
 
 
 
-       mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-           @Override
-           public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-               return false;
-           }
+    }
 
-           @Override
-           public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
 
-           }
-
-           @Override
-           public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-           }
-       });
+        savedInstanceState.putSerializable("announcementList", announcementList);
+        super.onSaveInstanceState(savedInstanceState);
 
     }
 

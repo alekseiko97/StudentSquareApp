@@ -1,6 +1,7 @@
 package com.fhict.studentsquareapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,10 +37,27 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RVAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RVAdapter.ViewHolder holder, int position) {
             holder.announcementName.setText(announcementList.get(position).name);
-            holder.announcementDesc.setText(announcementList.get(position).description);
-            holder.createdAt.setText("Created at: " + announcementList.get(position).createdAt.toString());
+            if (announcementList.get(position).description.length() >= 40)
+            {
+                holder.announcementDesc.setText(announcementList.get(position).description.substring(0, 40) + "...");
+            }
+            else {
+                holder.announcementDesc.setText(announcementList.get(position).description);
+            }
+
+            holder.createdAt.setText("Created at: " + announcementList.get(position).createdAt);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), AnnouncementOverviewActivity.class);
+                    intent.putExtra("announcement", announcementList.get(holder.getAdapterPosition()));
+
+                    view.getContext().startActivity(intent);
+                }
+            });
     }
 
     @Override

@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.fhict.studentsquareapp.MainActivity"
-    tools:showIn="@layout/app_bar_navigation">
+    tools:showIn="@layout/app_bar_navigation"
+    >
 
     <android.support.v7.widget.RecyclerView
+
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
