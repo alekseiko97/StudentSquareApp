@@ -12,14 +12,20 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class CreateAnnouncementActivity extends AppCompatActivity {
 
     private TextInputEditText titleField;
     private EditText descriptionField;
+    private DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_announcement);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Announcements");
 
         Button createBtn = (Button) findViewById(R.id.createBtn);
         titleField = (TextInputEditText)findViewById(R.id.titleField);
@@ -42,10 +48,7 @@ public class CreateAnnouncementActivity extends AppCompatActivity {
             String description = descriptionField.getText().toString();
 
             Announcement announcement = new Announcement(title, description);
-
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.putExtra("announcement", announcement);
-            setResult(RESULT_OK, intent);
+            databaseReference.push().setValue(announcement);
             finish();
 
         } catch (Exception ex)

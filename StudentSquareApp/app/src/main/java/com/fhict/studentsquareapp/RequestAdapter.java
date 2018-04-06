@@ -3,6 +3,7 @@ package com.fhict.studentsquareapp;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,9 +20,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestHolder> {
+
 
     public static class RequestHolder extends RecyclerView.ViewHolder {
         TextView requestName;
@@ -35,7 +39,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestH
     }
 
     private Context mContext;
-    private DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference("Requests");
+    private DatabaseReference mDatabaseReference;
     private ChildEventListener mChildEventListener;
     private ValueEventListener mValueEventListener;
     private static final String TAG = "Single";
@@ -43,53 +47,35 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestH
     public RequestAdapter(final Context context)
     {
         mContext = context;
-        //mDatabaseReference = reference;
-
-        // Create child event listener
-//        ChildEventListener childEventListener = new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//
-//                Request request = dataSnapshot.getValue(Request.class);
-//                if (!requestList.contains(request)) {
-//
-//                    requestList.add(request);
-//                    notifyItemInserted(requestList.size() - 1);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.w(TAG, "loadRequest:onCancelled", databaseError.toException());
-//            }
-//        };
-
-        ValueEventListener valueEventListener = new ValueEventListener() {
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("Requests");
+         //Create child event listener
+        ChildEventListener childEventListener = new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot: dataSnapshot.getChildren())
-                {
-                    if (!requestList.contains(snapshot.getValue(Request.class)))
-                    requestList.add(snapshot.getValue(Request.class));
-                    //notifyItemInserted(requestList.size() - 1);
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                Request request = dataSnapshot.getValue(Request.class);
+                if (!requestList.contains(request)) {
+
+                    requestList.add(request);
+                    Collections.sort(requestList);
                     notifyDataSetChanged();
                 }
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
             }
 
             @Override
@@ -98,10 +84,11 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestH
             }
         };
 
-        //mDatabaseReference.addChildEventListener(childEventListener);
-        //mChildEventListener = childEventListener;
-        mDatabaseReference.addValueEventListener(valueEventListener);
-        mValueEventListener = valueEventListener;
+
+        mDatabaseReference.addChildEventListener(childEventListener);
+        mChildEventListener = childEventListener;
+//        mDatabaseReference.addValueEventListener(valueEventListener);
+//        mValueEventListener = valueEventListener;
     }
     @Override
     public RequestHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -114,24 +101,23 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestH
     public void onBindViewHolder(final RequestHolder holder, int position) {
         Request request = requestList.get(position);
         holder.requestName.setText(request.name);
-//        if (requestList.get(position).description.length() >= 40)
-//        {
-//            holder.requestDesc.setText(requestList.get(position).description.substring(0, 40) + "...");
-//        }
-//        else {
+        if (requestList.get(position).description.length() >= 40) {
+            holder.requestDesc.setText(requestList.get(position).description.substring(0, 40) + "...");
+        } else {
             holder.requestDesc.setText(request.description);
-        //}
-        Integer points = request.points;
-        holder.requestPoints.setText(points.toString());
+            //}
+            Integer points = request.points;
+            holder.requestPoints.setText(points.toString());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), RequestOverviewActivity.class);
-                intent.putExtra("requestA", requestList.get(holder.getAdapterPosition()));
-                view.getContext().startActivity(intent);
-            }
-        });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), RequestOverviewActivity.class);
+                    intent.putExtra("requestA", requestList.get(holder.getAdapterPosition()));
+                    view.getContext().startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override
@@ -141,12 +127,10 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestH
 
     public void cleanupListener()
     {
-//        if (mChildEventListener != null) {
-//            mDatabaseReference.removeEventListener(mChildEventListener);
-//        }
-        if (mValueEventListener != null) {
-            mDatabaseReference.removeEventListener(mValueEventListener);
+        if (mChildEventListener != null) {
+            mDatabaseReference.removeEventListener(mChildEventListener);
         }
+
     }
 
 

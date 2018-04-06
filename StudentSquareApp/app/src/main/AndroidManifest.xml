@@ -45,9 +45,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".RequestActivity" />
-        <activity android:name=".CreateRequestActivity" />
-        <activity android:name=".RequestOverviewActivity"></activity>
+        <activity
+            android:name=".RequestActivity"
+            android:label="Requests Desk"/>
+        <activity
+            android:name=".CreateRequestActivity"
+            android:label="Create Request"/>
+        <activity
+            android:name=".RequestOverviewActivity"
+            android:label="Request Overview"/>
+
     </application>
 
 </manifest>

@@ -1,13 +1,14 @@
 package com.fhict.studentsquareapp;
 
+import android.app.Fragment;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,27 +18,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private RecyclerView mRecyclerView;
-    private RVAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<Announcement> announcementList = new ArrayList<>();
-
 
 
     @Override
@@ -47,19 +36,13 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
+        ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
 
+        TabPageAdapter tabPageAdapter = new TabPageAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(tabPageAdapter);
+        tabLayout.setupWithViewPager(viewPager);
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent i = new Intent(getApplicationContext(), CreateAnnouncementActivity.class);
-                startActivityForResult(i,0);
-
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -73,46 +56,11 @@ public class MainActivity extends AppCompatActivity
         TextView userEmail = (TextView)hView.findViewById(R.id.emailTextView);
         userEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
-        mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mAdapter = new RVAdapter(announcementList);
-        mRecyclerView.setAdapter(mAdapter);
-
-
-
-    }
-
-
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-
-        savedInstanceState.putSerializable("announcementList", announcementList);
-        super.onSaveInstanceState(savedInstanceState);
-
     }
 
 
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (requestCode == 0)
-        {
-            if (resultCode == RESULT_OK)
-            {
-                Announcement a = (Announcement)data.getExtras().get("announcement");
-                announcementList.add(a);
-                Collections.sort(announcementList);
-                mAdapter.notifyDataSetChanged();
-
-            }
-        }
-    }
 
     @Override
     public void onBackPressed() {

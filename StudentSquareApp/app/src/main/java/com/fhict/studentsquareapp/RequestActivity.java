@@ -30,19 +30,13 @@ public class RequestActivity extends AppCompatActivity {
     private RequestAdapter requestAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private FloatingActionButton addRequestBtn;
-    private final int REQUEST_CODE = 14;
-    private DatabaseReference databaseReference;
-    private ValueEventListener mEventListener;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
-
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Requests");
-
 
         recyclerView = (RecyclerView) findViewById(R.id.requestRV);
         recyclerView.setHasFixedSize(true);
@@ -54,7 +48,6 @@ public class RequestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CreateRequestActivity.class);
-                //startActivityForResult(intent, REQUEST_CODE);
                 startActivity(intent);
             }
         });
