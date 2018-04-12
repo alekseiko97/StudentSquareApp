@@ -3,6 +3,7 @@ package com.fhict.studentsquareapp;
 import android.annotation.SuppressLint;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -11,10 +12,11 @@ import java.util.Date;
 
 public class Request extends Announcement implements Serializable {
 
+    String id;
     int points;
     boolean isAccepted;
     boolean isCompleted;
-    //FirebaseUser acceptedBy;
+    String token;
 
     Request()
     {
@@ -22,11 +24,13 @@ public class Request extends Announcement implements Serializable {
     }
 
     @SuppressLint("SimpleDateFormat")
-    Request(String name, String description, int points) {
+    Request(String id, String name, String description, int points) {
         super(name, description);
+        this.id = id;
         this.points = points;
         this.isAccepted = false;
         this.isCompleted = false;
+        this.token = FirebaseInstanceId.getInstance().getToken();
         //this.acceptedBy = null;
 
     }

@@ -14,6 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class RequestOverviewActivity extends AppCompatActivity {
 
@@ -25,6 +30,7 @@ public class RequestOverviewActivity extends AppCompatActivity {
     private TextView points;
     private Button accept;
     private Button makeBet;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,24 +52,25 @@ public class RequestOverviewActivity extends AppCompatActivity {
             public void onClick(View view) {
                if (!r.isAccepted())
                {
-                    r.setAccepted(true);
-                    //r.setAcceptedBy(FirebaseAuth.getInstance().getCurrentUser());
-//                   AlertDialog.Builder builder = new AlertDialog.Builder(RequestOverviewActivity.this);
-//
-//                   builder.setMessage("You've successfully accepted this request. The author will receive notification about that!");
-//                   builder.setTitle("Success!");
-//                   builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                       @Override
-//                       public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                           finish();
-//                       }
-//                   });
-                   Toast.makeText(getApplicationContext(), "You've successfully accepted this request.", Toast.LENGTH_LONG).show();
-                   finish();
 
-//                   AlertDialog dialog = builder.create();
-//                   dialog.show();
+                   if(setAccepted())
+                   {
+                       AlertDialog.Builder builder = new AlertDialog.Builder(RequestOverviewActivity.this);
+
+                       builder.setMessage("You've successfully accepted this request. The author will receive notification about that!");
+                       builder.setTitle("Success!");
+                       builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialogInterface, int i) {
+
+                               finish();
+                           }
+                       });
+                       AlertDialog dialog = builder.create();
+                       dialog.show();
+                   }
+
+
                } else {
                    Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
                }
@@ -71,6 +78,18 @@ public class RequestOverviewActivity extends AppCompatActivity {
             }
         });
     }
+
+    private boolean setAccepted()
+    {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Requests").child(r.id);
+
+        r.setAccepted(true);
+
+        databaseReference.setValue(r);
+        return true;
+
+    }
+
 
     @SuppressLint("SetTextI18n")
     private void setData()

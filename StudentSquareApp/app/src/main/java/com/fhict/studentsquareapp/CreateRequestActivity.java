@@ -48,12 +48,13 @@ public class CreateRequestActivity extends AppCompatActivity {
 
     private void createRequest() {
         try {
+            String id = databaseReference.push().getKey();
             String name = titleField.getText().toString();
             String description = descriptionField.getText().toString();
             Integer points = numberPicker.getValue();
 
-            Request request = new Request(name, description, points);
-            databaseReference.push().setValue(request);
+            Request request = new Request(id, name, description, points);
+            databaseReference.child(id).setValue(request);
 
             finish();
         } catch (Exception ex)
