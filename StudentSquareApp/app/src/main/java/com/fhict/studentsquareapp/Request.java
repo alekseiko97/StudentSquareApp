@@ -35,6 +35,19 @@ public class Request extends Announcement implements Serializable {
 
     }
 
+    @SuppressLint("SimpleDateFormat")
+    Request(String id, String name, String description, String photoKey, int points) {
+        super(name, description, photoKey);
+        this.id = id;
+        this.points = points;
+        this.isAccepted = false;
+        this.isCompleted = false;
+        this.token = FirebaseInstanceId.getInstance().getToken();
+
+    }
+
+
+
     public boolean isCompleted() {
         return isCompleted;
     }

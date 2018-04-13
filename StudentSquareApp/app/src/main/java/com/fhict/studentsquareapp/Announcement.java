@@ -24,6 +24,7 @@ public class Announcement implements Serializable, Comparable<Announcement> {
      Date date;
      String createdAt;
      String createdBy;
+     String photoKey;
 
 
      Announcement()
@@ -38,6 +39,17 @@ public class Announcement implements Serializable, Comparable<Announcement> {
         this.date = new Date();
         this.createdAt = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(date);
         this.createdBy = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    Announcement(String name, String description, String photoKey)
+    {
+        this.name = name;
+        this.description = description;
+        this.date = new Date();
+        this.createdAt = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(date);
+        this.createdBy = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        this.photoKey = photoKey;
     }
 
 

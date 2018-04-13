@@ -99,7 +99,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 holder.announcementDesc.setText(announcementList.get(position).description);
             }
 
-            holder.createdAt.setText("Created at: " + announcementList.get(position).createdAt);
+            holder.createdAt.setText(announcementList.get(position).createdAt);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

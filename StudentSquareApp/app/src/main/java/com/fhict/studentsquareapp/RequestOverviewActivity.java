@@ -5,11 +5,18 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +37,8 @@ public class RequestOverviewActivity extends AppCompatActivity {
     private TextView points;
     private Button accept;
     private Button makeBet;
+    private Bitmap bitmap;
+    private ImageView imageView;
 
 
     @Override
@@ -44,6 +53,7 @@ public class RequestOverviewActivity extends AppCompatActivity {
         points = (TextView)findViewById(R.id.requestPointsOverview);
         accept = (Button)findViewById(R.id.acceptButton);
         makeBet = (Button)findViewById(R.id.betButton);
+        imageView = (ImageView)findViewById(R.id.requestClip);
         r = (Request) getIntent().getExtras().getSerializable("requestA");
         setData();
 
@@ -72,9 +82,71 @@ public class RequestOverviewActivity extends AppCompatActivity {
 
 
                } else {
-                   Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                   Toast.makeText(getApplicationContext(), "This request has been already accepted!", Toast.LENGTH_SHORT).show();
                }
 
+            }
+        });
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (bitmap != null)
+                {
+                    Intent intent = new Intent();
+                    String path = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(), bitmap, "Image", null);
+                    Uri uri = Uri.parse(path);
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.setData(uri);
+                    startActivity(intent);
+                } else
+                {
+                    Toast.makeText(getApplicationContext(), "No attachments were found", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        makeBet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(RequestOverviewActivity.this);
+
+                final EditText input = new EditText(getApplicationContext());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                input.setLayoutParams(lp);
+
+
+                builder.setMessage("Please enter a new value for points. Note that it has to be less than the current one");
+                builder.setTitle("Make a counter-offer!");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        boolean updated = updatePoints(Integer.parseInt(input.getText().toString()));
+                        if (updated) {
+                            Toast.makeText(getApplicationContext(), "Success! New value is " + input.getText().toString(), Toast.LENGTH_LONG).show();
+                            finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
+
+                builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                AlertDialog dialog;
+                dialog = builder.create();
+                dialog.setView(input);
+                dialog.show();
             }
         });
     }
@@ -90,6 +162,21 @@ public class RequestOverviewActivity extends AppCompatActivity {
 
     }
 
+    private boolean updatePoints(int newValue) {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Requests").child(r.id);
+
+        if (r.points > newValue) {
+            r.setPoints(newValue);
+            databaseReference.setValue(r);
+            return true;
+        }
+
+        return false;
+
+
+    }
+
 
     @SuppressLint("SetTextI18n")
     private void setData()
@@ -102,6 +189,10 @@ public class RequestOverviewActivity extends AppCompatActivity {
             createdOn.setText(r.createdAt);
             Integer i = r.points;
             points.setText(points.getText() + " " + i.toString());
+            if (r.photoKey != null) {
+                byte[] bytes = android.util.Base64.decode(r.photoKey, android.util.Base64.DEFAULT);
+                bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            }
 
         } catch (NullPointerException npe)
         {

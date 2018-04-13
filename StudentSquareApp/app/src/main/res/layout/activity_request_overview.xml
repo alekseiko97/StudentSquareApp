@@ -7,103 +7,234 @@
     tools:context=".RequestOverviewActivity"
     tools:layout_editor_absoluteY="81dp">
 
-    <TextView
-        android:id="@+id/requestNameOverview"
-        android:layout_width="361dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Title example"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/requestDescriptionOverview"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="344dp"
+        android:layout_height="439dp"
+        android:background="@drawable/border"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/requestDescriptionOverview"
-        android:layout_width="0dp"
-        android:layout_height="262dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="113dp"
-        android:text="@string/lorem_ipsum"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/requestNameOverview"
+            android:layout_width="317dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="78dp"
+            android:text="Title example"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="87dp" />
 
-    <TextView
-        android:id="@+id/requestCreatedByOverview"
-        android:layout_width="114dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="by"
-        app:layout_constraintBottom_toTopOf="@+id/requestNameOverview"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/requestCreatedByOverview"
+            android:layout_width="99dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="245dp"
+            android:layout_marginStart="245dp"
+            android:layout_marginTop="13dp"
+            android:text="Schriek"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/requestCreatedOnOverview"
-        android:layout_width="123dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:text="on"
-        app:layout_constraintBottom_toTopOf="@+id/requestNameOverview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/requestDescriptionOverview"
+            android:layout_width="314dp"
+            android:layout_height="189dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="133dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/requestCreatedOnOverview"
+            android:layout_width="101dp"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/requestCreatedByOverview"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/requestCreatedByOverview"
+            android:layout_marginTop="41dp"
+            android:text="TextView"
+            android:textColor="@android:color/black"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/requestAttachmentTextView"
+            android:layout_width="114dp"
+            android:layout_height="35dp"
+            android:layout_alignLeft="@+id/requestNameOverview"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/requestNameOverview"
+            android:layout_marginBottom="73dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/attachments"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/requestClip"
+            android:layout_width="30dp"
+            android:layout_height="36dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/requestAttachmentTextView"
+            android:layout_marginLeft="135dp"
+            android:layout_marginStart="135dp"
+            android:background="@drawable/border"
+            android:clickable="true"
+            android:focusable="true"
+            app:srcCompat="@drawable/clip" />
+
+        <TextView
+            android:id="@+id/requestPointsOverview"
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/requestCreatedOnOverview"
+            android:layout_alignStart="@+id/requestNameOverview"
+            android:layout_marginBottom="-41dp"
+            android:text="@string/points_label"
+            android:layout_alignLeft="@+id/requestNameOverview" />
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/acceptButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="42dp"
-        android:layout_marginStart="42dp"
-        android:text="@string/accept"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="9dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:text="ACCEPT"
+        app:layout_constraintBottom_toBottomOf="@+id/relativeLayout"
+        app:layout_constraintEnd_toStartOf="@+id/betButton"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/betButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="51dp"
-        android:layout_marginRight="51dp"
-        android:text="@string/bet"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/requestPointsOverview"
-        android:layout_width="351dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/points_label"
-        android:textSize="18sp"
+        android:layout_marginBottom="9dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
+        android:text="BET"
+        app:layout_constraintBottom_toBottomOf="@+id/relativeLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/requestDescriptionOverview" />
+        app:layout_constraintStart_toEndOf="@+id/acceptButton" />
+
+    <!--<TextView-->
+    <!--android:id="@+id/requestNameOverview"-->
+    <!--android:layout_width="361dp"-->
+    <!--android:layout_height="52dp"-->
+    <!--android:layout_marginBottom="16dp"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--android:layout_marginLeft="16dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--android:layout_marginStart="16dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:text="Title example"-->
+    <!--android:textAlignment="center"-->
+    <!--android:textSize="20sp"-->
+    <!--android:textStyle="bold"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/requestDescriptionOverview"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.444"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--app:layout_constraintVertical_bias="1.0" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/requestDescriptionOverview"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="262dp"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--android:layout_marginLeft="16dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--android:layout_marginStart="16dp"-->
+    <!--android:layout_marginTop="113dp"-->
+    <!--android:text="@string/lorem_ipsum"-->
+    <!--android:textSize="18sp"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.428"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/requestCreatedByOverview"-->
+    <!--android:layout_width="114dp"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_marginBottom="16dp"-->
+    <!--android:layout_marginLeft="16dp"-->
+    <!--android:layout_marginStart="16dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:text="by"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/requestNameOverview"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/requestCreatedOnOverview"-->
+    <!--android:layout_width="123dp"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_marginBottom="16dp"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:text="on"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/requestNameOverview"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/acceptButton"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="16dp"-->
+    <!--android:layout_marginLeft="42dp"-->
+    <!--android:layout_marginStart="42dp"-->
+    <!--android:text="@string/accept"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/betButton"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="16dp"-->
+    <!--android:layout_marginEnd="51dp"-->
+    <!--android:layout_marginRight="51dp"-->
+    <!--android:text="@string/bet"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/requestPointsOverview"-->
+    <!--android:layout_width="351dp"-->
+    <!--android:layout_height="39dp"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--android:layout_marginLeft="16dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--android:layout_marginStart="16dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:text="@string/points_label"-->
+    <!--android:textSize="18sp"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/requestDescriptionOverview" />-->
 </android.support.constraint.ConstraintLayout>

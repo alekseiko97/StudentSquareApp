@@ -65,7 +65,15 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestH
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                Request request = dataSnapshot.getValue(Request.class);
+                for (Request r: requestList) {
+                    if (r.id.equals(request.id)) {
+                        requestList.remove(r);
+                        requestList.add(request);
+                        Collections.sort(requestList);
+                        notifyDataSetChanged();
+                    }
+                }
             }
 
             @Override

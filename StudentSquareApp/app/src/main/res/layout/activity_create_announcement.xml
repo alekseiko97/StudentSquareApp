@@ -40,7 +40,7 @@
         android:ems="10"
         android:hint="@string/enter_description"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
+        app:layout_constraintBottom_toTopOf="@+id/addAttachmentAnnouncement"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
@@ -54,7 +54,7 @@
         android:layout_marginStart="16dp"
         android:text="@string/create_btn"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/floatingActionButton" />
+        app:layout_constraintStart_toStartOf="@+id/addAttachmentAnnouncement" />
 
     <TextView
         android:id="@+id/textView3"
@@ -68,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@+id/descriptionField" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/addAttachmentAnnouncement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
