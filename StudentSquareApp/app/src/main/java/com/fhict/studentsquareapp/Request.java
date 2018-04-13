@@ -16,7 +16,7 @@ public class Request extends Announcement implements Serializable {
     int points;
     boolean isAccepted;
     boolean isCompleted;
-    String token;
+    //String token;
 
     Request()
     {
@@ -30,7 +30,7 @@ public class Request extends Announcement implements Serializable {
         this.points = points;
         this.isAccepted = false;
         this.isCompleted = false;
-        this.token = FirebaseInstanceId.getInstance().getToken();
+        //this.token = FirebaseInstanceId.getInstance().getToken();
         //this.acceptedBy = null;
 
     }
@@ -42,7 +42,7 @@ public class Request extends Announcement implements Serializable {
         this.points = points;
         this.isAccepted = false;
         this.isCompleted = false;
-        this.token = FirebaseInstanceId.getInstance().getToken();
+        //this.token = FirebaseInstanceId.getInstance().getToken();
 
     }
 
@@ -72,13 +72,4 @@ public class Request extends Announcement implements Serializable {
         this.points = points;
     }
 
-//    public FirebaseUser getAcceptedBy()
-//    {
-//        return acceptedBy;
-//    }
-//
-//    public void setAcceptedBy(FirebaseUser firebaseUser)
-//    {
-//        this.acceptedBy = firebaseUser;
-//    }
 }

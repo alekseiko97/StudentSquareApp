@@ -65,15 +65,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestH
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Request request = dataSnapshot.getValue(Request.class);
-                for (Request r: requestList) {
-                    if (r.id.equals(request.id)) {
-                        requestList.remove(r);
-                        requestList.add(request);
-                        Collections.sort(requestList);
-                        notifyDataSetChanged();
-                    }
-                }
+
             }
 
             @Override
@@ -92,11 +84,30 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestH
             }
         };
 
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                requestList.clear();
+                for (DataSnapshot snapshot: dataSnapshot.getChildren())
+                {
+                    Request request = snapshot.getValue(Request.class);
+                    requestList.add(request);
+                    Collections.sort(requestList);
+                    notifyDataSetChanged();
+                }
+            }
 
-        mDatabaseReference.addChildEventListener(childEventListener);
-        mChildEventListener = childEventListener;
-//        mDatabaseReference.addValueEventListener(valueEventListener);
-//        mValueEventListener = valueEventListener;
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+
+       // mDatabaseReference.addChildEventListener(childEventListener);
+       // mChildEventListener = childEventListener;
+        mDatabaseReference.addValueEventListener(valueEventListener);
+        mValueEventListener = valueEventListener;
     }
     @Override
     public RequestHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -113,7 +124,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestH
             holder.requestDesc.setText(requestList.get(position).description.substring(0, 40) + "...");
         } else {
             holder.requestDesc.setText(request.description);
-            //}
+            }
             Integer points = request.points;
             holder.requestPoints.setText(points.toString());
 
@@ -126,7 +137,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestH
                 }
             });
         }
-    }
+
 
     @Override
     public int getItemCount() {
@@ -135,8 +146,12 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestH
 
     public void cleanupListener()
     {
-        if (mChildEventListener != null) {
-            mDatabaseReference.removeEventListener(mChildEventListener);
+//        if (mChildEventListener != null) {
+//            mDatabaseReference.removeEventListener(mChildEventListener);
+//        }
+
+        if (mValueEventListener != null) {
+            mDatabaseReference.removeEventListener(mValueEventListener);
         }
 
     }
